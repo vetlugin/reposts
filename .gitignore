@@ -114,3 +114,4 @@ dmypy.json
 .pyre/
 fotoshar.jpeg
 .DS_Store
+*.jpg
