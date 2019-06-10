@@ -3,15 +3,7 @@ import vk_api
 import requests
 import telegram
 from dotenv import load_dotenv
-
-load_dotenv()
-
-VK_TOKEN=os.getenv("VK_TOKEN")
-VK_VERSION=os.getenv("VK_VERSION")
-VK_GROUP_ID=os.getenv("VK_GROUP_ID")
-TELEGRAM_TOKEN=os.getenv("TELEGRAM_TOKEN")
-FACEBOOK_GROUP_ID=os.getenv("FACEBOOK_GROUP_ID")
-FACEBOOK_TOKEN=os.getenv("FACEBOOK_TOKEN")
+import argparse
 
 
 def url_check(path):
@@ -77,13 +69,31 @@ def facebook_post(message, pic_path):
         return
 
 
-def main():
-    message = 'Hello World'
-    pic_path = 'fotoshar.jpeg'
+def main(message = 'Hello, World!', pic_path = 'empty.png'):
 
     vk_post(message, pic_path)
     telegram_post(message, pic_path)
     facebook_post(message, pic_path)
 
-if __name__ == '__main__':
-    main()
+if __name__ == "__main__":
+
+    load_dotenv()
+
+    parser = argparse.ArgumentParser(description='Post message with picture to Vkontakte, Telegram and Facebook')
+    parser.add_argument('message', help='Message to post')
+    parser.add_argument('pic_path', help='Path to picture for posting')
+    args = parser.parse_args()
+
+    load_dotenv()
+
+    VK_TOKEN=os.getenv("VK_TOKEN")
+    VK_VERSION=os.getenv("VK_VERSION")
+    VK_GROUP_ID=os.getenv("VK_GROUP_ID")
+    TELEGRAM_TOKEN=os.getenv("TELEGRAM_TOKEN")
+    FACEBOOK_GROUP_ID=os.getenv("FACEBOOK_GROUP_ID")
+    FACEBOOK_TOKEN=os.getenv("FACEBOOK_TOKEN")
+
+    message = args.message
+    pic_path = args.pic_path
+
+    main(message, pic_path)
